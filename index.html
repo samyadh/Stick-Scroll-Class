@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+<script   src="https://code.jquery.com/jquery-1.12.4.js"   integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="   crossorigin="anonymous"></script>
+<style>
+* { margin:0px; padding:0px; }
+body { font-family: Arial, Helvetica, sans-serif; }
+article {
+    min-height:300px;
+	border-bottom: 1px solid #BDBFB0;
+	font-size:32px;
+}
+.fixed { position:fixed; top:0px; }
+</style> 
+<script>
+$.fn.stickScrollClass = function(options) {
+	var el = this;
+	var demoEle;
+	var triggerCallbackFunction;
+	var triggers;
+	var currentScrollVal;
+	var lastTriggerVal = 0;
+	var callback;
+	var isDemo;
+	var classAdded = false;
+	var classRemoved = false;
+	var settings = $.extend({ 
+		start:el.offset().top, 
+		end: $(document).height() - $(window).height(),
+		showDemo: false
+		},options);
+	
+	var init = function(){
+		isDemo = settings.showDemo;
+		
+		if(isDemo)
+		{
+			$('body').append('<div id="stickScrollDemo" style="position:fixed; bottom:30px; right:30px; padding:15px; background-color:#000000; color:#FFFFFF; z-index:9999">No effects yet!</div>');
+			demoEle = $('#stickScrollDemo');
+		}
+		
+		if(isTriggersEnabled)
+		{
+			triggers = settings.triggers;
+			triggersCopy = settings.triggers;
+			triggerCallbackFunction = function(triggerIndex, direction){
+				callback = settings.triggerCallback;
+				callback(triggerIndex, direction);
+			};
+		}
+		
+		$(window).scroll(function(){
+			currentScrollVal = window.pageYOffset;
+			startFix();
+			if(isTriggersEnabled)
+			{
+				startTriggers();
+			}
+			endFix();
+		});
+	}
+	
+	var startFix = function(){
+		if(currentScrollVal >= settings.start)
+		{
+			el.addClass(settings.className);
+			
+			if(isDemo && !classAdded){ $(demoEle).html('Specified class "'+settings.className+'" added.'); }
+			classAdded = true;
+			classRemoved = false;
+		}
+	}
+	
+	var isTriggersEnabled = function() {
+		if(typeof(settings.triggers) !== "undefined" && typeof(settings.triggerCallback) !== "undefined")
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	var startTriggers = function(){
+		$.each(triggers, function(index,value){
+			if(currentScrollVal >= triggers[index] && lastTriggerVal <= triggers[index])
+			{
+				if(isDemo){	$(demoEle).html('Tiggered Event :'+(index+1)+' for downwards.'); }
+				triggerCallbackFunction(index+1, 1);
+				lastTriggerVal = currentScrollVal;
+			}
+			
+			if(currentScrollVal <= triggers[index] && lastTriggerVal >= triggers[index])
+			{
+				if(isDemo){	$(demoEle).html('Tiggered Event :'+(index+1)+' for upwards.'); }
+				triggerCallbackFunction(index+1, 0);
+				lastTriggerVal = currentScrollVal;
+			}
+		});
+	}
+	
+	var endFix = function(){
+		if(currentScrollVal >= settings.end || currentScrollVal <= settings.start)
+		{
+			el.removeClass(settings.className);
+			
+			if(isDemo && !classRemoved){ $(demoEle).html('Specified class "'+settings.className+'" removed.'); flag = 0; }
+			classRemoved = true;
+			classAdded = false;
+		}
+	}
+	
+	init();
+};
+
+$('document').ready(function(){
+	var trig = [];
+	for(i=1;i<=$(".jokes .joke").length;i++)
+	{
+		if(i%16 == 0)
+		{
+			$(".jokes .joke").eq(i-1).css('background-color','#333333');
+			trig.push($(".jokes .joke").eq(i-1).offset().top);
+		}
+	}
+	
+	$("#adContainer").stickScrollClass({
+		start:500,
+		className:"fixed",
+		showDemo: true,
+		triggers:trig,
+		triggerCallback:function(triggerIndex, direction){ 
+			if(triggerIndex==1 && direction){
+				$("#adContainer").css('background-color','yellow');
+			}
+			else if(triggerIndex==1 && !direction){
+				$("#adContainer").css('background-color','red');
+			}
+			else if(triggerIndex==2 && direction){
+				$("#adContainer").css('background-color','green');
+			}
+			else if(triggerIndex==2 && !direction){
+				$("#adContainer").css('background-color','yellow');
+			}
+		}
+	});
+});
+</script>
+</head>
+<body>
+	<div class="jokes" style="float:left; width:70%">
+		<article class="joke">1</article>
+		<article class="joke">2</article>
+		<article class="joke">3</article>
+		<article class="joke">4</article>
+		<article class="joke">5</article>
+		<article class="joke">6</article>
+		<article class="joke">7</article>
+		<article class="joke">8</article>
+		<article class="joke">9</article>
+		<article class="joke">10</article>
+		<article class="joke">11</article>
+		<article class="joke">12</article>
+		<article class="joke">13</article>
+		<article class="joke">14</article>
+		<article class="joke">15</article>
+		<article class="joke">16</article>
+		<article class="joke">17</article>
+		<article class="joke">18</article>
+		<article class="joke">19</article>
+		<article class="joke">20</article>
+		<article class="joke">21</article>
+		<article class="joke">22</article>
+		<article class="joke">23</article>
+		<article class="joke">24</article>
+		<article class="joke">25</article>
+		<article class="joke">26</article>
+		<article class="joke">27</article>
+		<article class="joke">28</article>
+		<article class="joke">29</article>
+		<article class="joke">30</article>
+		<article class="joke">31</article>
+		<article class="joke">32</article>
+		<article class="joke">33</article>
+		<article class="joke">34</article>
+		<article class="joke">35</article>
+		<article class="joke">36</article>
+		<article class="joke">37</article>
+		<article class="joke">38</article>
+		<article class="joke">39</article>
+		<article class="joke">40</article>
+	</div>
+	<div style="float:left; width:30%;">
+		<div id="adContainer" style="min-height:300px; width:300px; background-color:red;">
+			Your effective element.
+		</div>
+	</div>
+</body>
+</html>
