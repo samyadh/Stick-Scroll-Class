@@ -8,7 +8,7 @@
  *
  *
  * How to use?
- * Use it how you use any of your jQuery plug-in.
+ * Use it how you use any other jQuery plug-in's.
  * e.g. $("#yourElement").stickScrollClass(options);
  *
  * Options?
